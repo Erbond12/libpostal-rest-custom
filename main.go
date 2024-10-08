@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/gorilla/handlers"  // NEW: Added for CORS
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -167,6 +168,17 @@ func main() {
 
 	log.Info().Msg("Starting libpostal-rest service")
 
+
+	// CORS SETUP - NEW: Define allowed origins, methods, and headers
+	corsObj := handlers.CORS(
+		handlers.AllowedOrigins([]string{"*"}),       // Allow all origins (you can change this to specific domains)
+		handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"}), // Allowed methods
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}), // Allowed headers
+	)
+	
+	// Apply CORS middleware to the router - NEW: Wrapping router with corsObj
+	corsRouter := corsObj(router)
+	
 	s := &http.Server{Addr: listenSpec, Handler: router}
 	go func() {
 		if certFile != "" && keyFile != "" {
