@@ -179,7 +179,7 @@ func main() {
 	// Apply CORS middleware to the router - NEW: Wrapping router with corsObj
 	corsRouter := corsObj(router)
 	
-	s := &http.Server{Addr: listenSpec, Handler: router}
+	s := &http.Server{Addr: listenSpec, Handler: corsRouter} // NEW: Use corsRouter instead of router
 	go func() {
 		if certFile != "" && keyFile != "" {
 			log.Info().Msgf("listening on https://%s", listenSpec)
