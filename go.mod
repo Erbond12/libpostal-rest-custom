@@ -1,4 +1,4 @@
-module github.com/Erbond12/libpostal-rest-custom
+module github.com/johnlonganecker/libpostal-rest
 
 go 1.16
 
