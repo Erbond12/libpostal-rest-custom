@@ -1,3 +1,5 @@
+Forked to have control over CORS, when using libpostal-rest-docker
+
 # Libpostal REST
 
 ## Build
